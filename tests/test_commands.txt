@@ -1,0 +1,9 @@
+# Basic IRC command sequence for manual testing
+PASS changeme
+NICK tester
+USER tester 0 * :Test User
+JOIN #general
+PRIVMSG #general :hello world
+PING :12345
+PART #general :bye
+QUIT :done
