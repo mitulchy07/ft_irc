@@ -1,0 +1,113 @@
+# Executable
+
+ircserv
+ft_irc
+a.out
+
+# Compiled object files
+
+*.o
+*.obj
+*.lo
+
+# Dependency files
+
+*.d
+
+# Libraries
+
+*.a
+*.so
+*.dylib
+*.dll
+
+# Build directories
+
+build/
+bin/
+obj/
+out/
+
+# Debug files
+
+*.gch
+*.pch
+*.dSYM/
+*.core
+core
+core.*
+
+# Coverage files
+
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# Log and temporary files
+
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.#*
+
+# Test output
+
+tests/output/
+tests/results/
+tests/logs/
+
+# Valgrind output
+
+valgrind-out.txt
+valgrind*.log
+
+# Visual Studio Code
+
+.vscode/
+
+# CLion / JetBrains
+
+.idea/
+cmake-build-*/
+
+# Vim
+
+.session.vim
+
+# macOS
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+
+.directory
+
+# Windows
+
+Thumbs.db
+Desktop.ini
+
+# Archive files
+
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# Environment files
+
+.env
+.env.*
+
+# Keep important project files tracked
+
+!Makefile
+!README.md
+!config/
+!config/irc.conf
