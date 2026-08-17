@@ -6,7 +6,7 @@
 /*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:27 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/17 21:49:18 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/16 04:30:59 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,32 +82,6 @@ void Channel::addOperator(Client *client)
 		return ;
 	_operators.push_back(client);
 }
-
-void Channel::removeClient(Client *client)
-{
-	for (std::vector< Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
-	{
-		if (*it == Client)
-		{
-			_clients.erase(it);
-			return ;
-		}
-		
-	}
-}
-
-void Channel::removeOp(Client *client)
-{
-	for (std::vector< Client *>::iterator it = _operators.begin(); it != _operators.end(): ++it)
-	{
-		if (*it == client)
-		{
-			_operators.erase(it);
-			return ;
-		}
-	}
-}
-
 
 void Channel::broadcast(Server &server, Client *sender, const std::string &msg)
 {

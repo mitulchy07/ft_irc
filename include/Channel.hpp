@@ -6,7 +6,7 @@
 /*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:01 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/17 21:40:49 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/16 03:58:31 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,5 @@ class Channel
         bool    isOperator(Client  *client) const;
         void    addClient(Client  *client);
         void    addOperator(Client  *client);
-        void    removeOp(Client *client);
-        void    removeClient(Client *client);
         void broadcast(Server &server, Client *sender, const std::string &msg);
 };

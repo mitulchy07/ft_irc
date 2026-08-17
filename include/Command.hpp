@@ -6,7 +6,7 @@
 /*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:11 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/17 21:51:17 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/16 04:01:33 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ class  Command
         static  void sendUnknownCommand(Server &server, Client &client, const IrcMsg &msg);
         static  bool handlePass(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleJoin(Server &server, Client &client, const IrcMsg &msg);
-        static  bool handleKick(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleNick(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleUser(Server &server, Client &client, const IrcMsg &msg);
         static  void tryRegister(Server &server, Client &client);
