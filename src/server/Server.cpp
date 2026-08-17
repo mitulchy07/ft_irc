@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   Server.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:27 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/07/27 00:07:32 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/16 02:34:32 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Server.hpp"
+#include "Parser.hpp"
+#include "Command.hpp"
 #include <cctype>
 #include <iostream>
 #include <stdexcept>
@@ -18,7 +20,7 @@
 
 Server::Server(const std::string &port, const std::string &password)
 	: _port(parsePort(port)), _password(password), _serverFd(-1),
-	  _running(false), _pollFds(), _clients()
+	  _running(false), _pollFds(), _clients(), _channels()
 {
 	if (_password.empty())
 		throw (std::runtime_error("Password cannot be empty"));
@@ -85,26 +87,27 @@ void Server::queueMessage(int fd, const std::string &message)
 
 bool Server::processLine(Client &client, const std::string &line)
 {
-	std::string command;
-	size_t position = line.find(' ');
+	IrcMsg	msg;
 
-	if (position == std::string::npos)
-		command = line;
-	else
-		command = line.substr(0, position);
-	for (size_t i = 0; i < command.size(); ++i)
-		command[i] = static_cast<char>(std::toupper(
-			static_cast<unsigned char>(command[i])));
 	std::cout << "[client " << client.getFd() << "] " << line << std::endl;
-	if (command == "PING")
-	{
-		if (position == std::string::npos || position + 1 >= line.size())
-			queueMessage(client.getFd(), ":irc.local 409 * :No origin specified");
-		else
-			queueMessage(client.getFd(), "PONG " + line.substr(position + 1));
-	}
-	else if (command == "QUIT")
-		return (false);
-	/* Replace this function body with Parser/Command dispatch later. */
-	return (true);
+	msg = Parser::parse(line);
+	return (Command::execute(*this, client, msg));
 }
+
+Channel *Server::createChannel(const std::string &name)
+{
+	std::map<std::string, Channel>::iterator it = _channels.find(name);
+	if (it != _channels.end())
+		return(&it->second);
+	std::pair<std::map<std::string, Channel>::iterator, bool> result = _channels.insert(std::make_pair(name, Channel(name)));
+	return (&result.first->second);
+}
+
+Channel *Server::getChannel(const std::string &name)
+{
+	std::map<std::string, Channel>::iterator it = _channels.find(name);
+	if (it == _channels.end())
+		return NULL;
+	return(&it->second);
+}
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Server.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:21 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/07/27 00:03:51 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/16 02:21:30 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define SERVER_HPP
 
 # include "Client.hpp"
+#include "Channel.hpp"
 # include <map>
 # include <poll.h>
 # include <string>
@@ -28,7 +29,8 @@ class Server
 		bool				_running;
 		std::vector<struct pollfd>	_pollFds;
 		std::map<int, Client>		_clients;
-
+		std::map<std::string, Channel> _channels;
+		
 		Server();
 		Server(const Server &other);
 		Server &operator=(const Server &other);
@@ -53,7 +55,7 @@ class Server
 		void	init();
 		void	run();
 		void	stop();
-
+		
 		int					getPort() const;
 		const std::string	&getPassword() const;
 		Client				*getClient(int fd);
@@ -62,6 +64,8 @@ class Server
 
 		void	queueMessage(int fd, const std::string &message);
 		void	disconnectClient(int fd, const std::string &reason);
+		Channel *getChannel(const	std::string &name);
+		Channel	*createChannel(const std::string &name);
 };
 
 #endif
