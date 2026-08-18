@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:27 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 20:17:44 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/18 20:50:02 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,18 @@ bool Server::processLine(Client &client, const std::string &line)
 {
 	IrcMsg	msg;
 
-	std::cout << "[client " << client.getFd() << "] " << line << std::endl;
 	msg = Parser::parse(line);
 	return (Command::execute(*this, client, msg));
 }
+
+// bool Server::processLine(Client &client, const std::string &line)
+// {
+// 	IrcMsg	msg;
+
+// 	std::cout << "[client " << client.getFd() << "] " << line << std::endl;
+// 	msg = Parser::parse(line);
+// 	return (Command::execute(*this, client, msg));
+// }
 
 Channel *Server::createChannel(const std::string &name)
 {

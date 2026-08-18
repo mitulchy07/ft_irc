@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:01 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 20:15:03 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/18 21:04:40 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ class Server;
 class Channel
 {
 private:
-	std::string				_name;
-	std::string				_topic;
-	std::vector<Client *>	_clients;
-	std::vector<Client *>	_operators;
+	std::string	_name;
+	std::string	_topic;
+	std::vector<Client *> _clients;
+	std::vector<Client *> _operators;
 
 public:
 	Channel();
