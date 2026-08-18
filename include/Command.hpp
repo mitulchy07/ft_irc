@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:11 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/16 04:01:33 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/18 03:03:51 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ class  Command
         static  void tryRegister(Server &server, Client &client);
         static  bool isNicknameUsed(Server &server, Client &client,const std::string &nickname);
         static  bool isValidNickname(const std::string &nickname);
-        static bool		handlePrivmsg(Server &server, Client &client, const IrcMsg &msg);
+        static  bool handlePrivmsg(Server &server, Client &client, const IrcMsg &msg);
         static Client	*findClientByNickname(Server &server, const std::string &nickname);
         
         public:
