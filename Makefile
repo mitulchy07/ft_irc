@@ -1,4 +1,6 @@
 NAME = ircserv
+BOT = ircbot
+
 SRCS = src/main.cpp \
        src/client/Client.cpp \
        src/server/Server.cpp \
@@ -7,11 +9,14 @@ SRCS = src/main.cpp \
        src/server/ServerLoop.cpp \
        src/server/ServerSocket.cpp \
        src/parser/Parser.cpp \
-	   src/channel/Channel.cpp \
+       src/channel/Channel.cpp \
        src/commands/Command.cpp
+
+BOT_SRCS = bonus/Bot.cpp
 
 OBJDIR = obj
 OBJS = $(addprefix $(OBJDIR)/,$(SRCS:.cpp=.o))
+BOT_OBJS = $(addprefix $(OBJDIR)/,$(BOT_SRCS:.cpp=.o))
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
@@ -31,6 +36,12 @@ $(NAME): $(OBJS)
 	@echo "$(BLUE)[LINK]$(NC) $(NAME)"
 	@$(CXX) $(CXXFLAGS) -o $(NAME) $(OBJS)
 
+$(BOT): $(BOT_OBJS)
+	@echo "$(BLUE)[LINK]$(NC) $(BOT)"
+	@$(CXX) $(CXXFLAGS) -o $(BOT) $(BOT_OBJS)
+
+bonus: $(NAME) $(BOT)
+
 $(OBJDIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)[CC]$(NC) $<"
@@ -41,9 +52,9 @@ clean:
 	@rm -rf $(OBJDIR)
 
 fclean: clean
-	@echo "$(RED)[FCLEAN]$(NC) removing $(NAME)"
-	@rm -f $(NAME)
+	@echo "$(RED)[FCLEAN]$(NC) removing $(NAME) and $(BOT)"
+	@rm -f $(NAME) $(BOT)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
