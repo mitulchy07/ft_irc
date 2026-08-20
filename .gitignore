@@ -104,10 +104,3 @@ Desktop.ini
 
 .env
 .env.*
-
-# Keep important project files tracked
-
-!Makefile
-!README.md
-!config/
-!config/irc.conf
