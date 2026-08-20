@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:27 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 20:10:11 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/20 03:13:00 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@
 
 Channel::Channel() {}
 
-Channel::Channel(const std::string &name) : _name(name), _clients(), _operators()
+Channel::Channel(const std::string &name)
+    : _name(name), _clients(), _operators(), _topic(), _invited(),
+      _inviteOnly(false), _topicRestricted(false), _hasKey(false),
+      _key(), _userLimit(-1)
 {
 }
 
 Channel::Channel(const Channel &other)
     : _name(other._name), _clients(other._clients),
-      _operators(other._operators)
+      _operators(other._operators), _topic(other._topic),
+      _invited(other._invited), _inviteOnly(other._inviteOnly),
+      _topicRestricted(other._topicRestricted), _hasKey(other._hasKey),
+      _key(other._key), _userLimit(other._userLimit)
 {
 }
 
@@ -33,6 +39,13 @@ Channel &Channel::operator=(const Channel &other)
         _name = other._name;
         _clients = other._clients;
         _operators = other._operators;
+        _topic = other._topic;
+        _invited = other._invited;
+        _inviteOnly = other._inviteOnly;
+        _topicRestricted = other._topicRestricted;
+        _hasKey = other._hasKey;
+        _key = other._key;
+        _userLimit = other._userLimit;
     }
     return (*this);
 }
@@ -44,9 +57,76 @@ const std::string &Channel::getName() const
     return (_name);
 }
 
+const std::string &Channel::getTopic() const
+{
+    return (_topic);
+}
+
+void Channel::setTopic(const std::string &topic)
+{
+    _topic = topic;
+}
+
 size_t Channel::getClientCount() const
 {
     return (_clients.size());
+}
+
+bool Channel::isInviteOnly() const
+{
+    return (_inviteOnly);
+}
+
+void Channel::setInviteOnly(bool value)
+{
+    _inviteOnly = value;
+}
+
+bool Channel::isTopicRestricted() const
+{
+    return (_topicRestricted);
+}
+
+void Channel::setTopicRestricted(bool value)
+{
+    _topicRestricted = value;
+}
+
+bool Channel::hasKey() const
+{
+    return (_hasKey);
+}
+
+const std::string &Channel::getKey() const
+{
+    return (_key);
+}
+
+void Channel::setKey(const std::string &key)
+{
+    _key = key;
+    _hasKey = true;
+}
+
+void Channel::removeKey()
+{
+    _key.clear();
+    _hasKey = false;
+}
+
+int Channel::getUserLimit() const
+{
+    return (_userLimit);
+}
+
+void Channel::setUserLimit(int limit)
+{
+    _userLimit = limit;
+}
+
+void Channel::removeUserLimit()
+{
+    _userLimit = -1;
 }
 
 bool Channel::hasClient(Client *client) const
@@ -85,22 +165,58 @@ void Channel::addOperator(Client *client)
 
 void Channel::removeClient(Client *client)
 {
-    std::vector<Client *>::iterator it;
-
-    for (it = _clients.begin(); it != _clients.end(); ++it)
+    removeOp(client);
+    removeInvite(client);
+    for (std::vector<Client *>::iterator it = _clients.begin();
+        it != _clients.end(); ++it)
     {
         if (*it == client)
         {
             _clients.erase(it);
-            break ;
+            return ;
         }
     }
-    for (it = _operators.begin(); it != _operators.end(); ++it)
+}
+
+void Channel::removeOp(Client *client)
+{
+    for (std::vector<Client *>::iterator it = _operators.begin();
+        it != _operators.end(); ++it)
     {
         if (*it == client)
         {
             _operators.erase(it);
-            break ;
+            return ;
+        }
+    }
+}
+
+bool Channel::isInvited(Client *client) const
+{
+    for (size_t i = 0; i < _invited.size(); ++i)
+    {
+        if (_invited[i] == client)
+            return (true);
+    }
+    return (false);
+}
+
+void Channel::addInvite(Client *client)
+{
+    if (client == NULL || isInvited(client))
+        return ;
+    _invited.push_back(client);
+}
+
+void Channel::removeInvite(Client *client)
+{
+    for (std::vector<Client *>::iterator it = _invited.begin();
+        it != _invited.end(); ++it)
+    {
+        if (*it == client)
+        {
+            _invited.erase(it);
+            return ;
         }
     }
 }

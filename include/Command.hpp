@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:11 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 03:03:51 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/20 01:22:25 by mshariar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,16 @@ class  Command
         static  void sendUnknownCommand(Server &server, Client &client, const IrcMsg &msg);
         static  bool handlePass(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleJoin(Server &server, Client &client, const IrcMsg &msg);
+        static  bool handleKick(Server &server, Client &client, const IrcMsg &msg);
+        static  bool handleTopic(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleNick(Server &server, Client &client, const IrcMsg &msg);
         static  bool handleUser(Server &server, Client &client, const IrcMsg &msg);
+        static  bool handleInvite(Server &server, Client &client, const IrcMsg &msg);
+        static  bool handleMode(Server &server, Client &client, const IrcMsg &msg);
         static  void tryRegister(Server &server, Client &client);
         static  bool isNicknameUsed(Server &server, Client &client,const std::string &nickname);
         static  bool isValidNickname(const std::string &nickname);
-        static  bool handlePrivmsg(Server &server, Client &client, const IrcMsg &msg);
+        static bool		handlePrivmsg(Server &server, Client &client, const IrcMsg &msg);
         static Client	*findClientByNickname(Server &server, const std::string &nickname);
         
         public:
