@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Command.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:11 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/20 01:22:25 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/20 22:34:01 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,4 @@ class  Command
         
         public:
         static  bool execute(Server &server, Client &client, const IrcMsg &msg);
-
-
-
 };
