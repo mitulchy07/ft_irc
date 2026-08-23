@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bot.cpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 05:04:29 by mshariar          #+#    #+#             */
-/*   Updated: 2026/08/21 01:07:28 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/24 01:19:22 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,17 @@ static std::string intToString(int n)
 
 static void sendLine(int fd, const std::string &line)
 {
-	std::string msg = line + "\r\n";
-	send(fd, msg.c_str(), msg.size(), 0);
+    std::string msg = line + "\r\n";
+    size_t total = 0;
+
+    while (total < msg.size())
+    {
+        ssize_t sent = send(fd, msg.c_str() + total,
+                msg.size() - total, 0);
+        if (sent <= 0)
+            return ;
+        total += sent;
+    }
 }
 
 static int connectBot(const std::string &host, int port)
@@ -131,10 +140,13 @@ static void handleLine(int fd, const std::string &botNick, const std::string &li
 
 	std::cout << line << std::endl;
 
-	if (line.substr(0, 4) == "PING")
+	if (line.compare(0, 4, "PING") == 0)
 	{
-		sendLine(fd, "PONG " + line.substr(5));
-		return ;
+    	if (line.size() > 5)
+      	  sendLine(fd, "PONG " + line.substr(5));
+   	 else
+      	  sendLine(fd, "PONG");
+   	 return ;
 	}
 
 	msgPos = line.find(" PRIVMSG ");
