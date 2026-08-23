@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:21 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/23 23:05:54 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/23 23:42:34 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <poll.h>
 #include <string>
 #include <vector>
+#include <signal.h>
 
 
 class Server
@@ -48,6 +49,8 @@ class Server
 		bool flushClientOutput(int fd);
 		bool processClientBuffer(Client &client);
 		bool processLine(Client &client, const std::string &line);
+		static volatile sig_atomic_t _stopSignal;
+    	static void handleSignal(int sig);
 
 	public:
 		Server(const std::string &port, const std::string &password);

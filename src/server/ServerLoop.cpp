@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:36 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 20:08:17 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/23 23:44:04 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void Server::run()
         throw (std::runtime_error("Server is not initialized"));
     _running = true;
     std::cout << "IRC server listening on port " << _port << std::endl;
-    while (_running)
+    while (_running && !_stopSignal)
     {
         ready = poll(&_pollFds[0], _pollFds.size(), -1);
         if (ready == -1)

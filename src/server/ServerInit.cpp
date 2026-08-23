@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:33 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/23 23:05:42 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/23 23:43:31 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include <csignal>
 #include <cstdlib>
 #include <stdexcept>
+
+volatile sig_atomic_t Server::_stopSignal = 0;
+
+void Server::handleSignal(int sig)
+{
+    if (sig == SIGINT)
+        _stopSignal = 1;
+}
 
 int Server::parsePort(const std::string &port) const
 {
@@ -36,6 +44,7 @@ void Server::init()
         return ;
 
     std::signal(SIGPIPE, SIG_IGN);
+    std::signal(SIGINT, Server::handleSignal);
 
     createListeningSocket();
     addPollFd(_serverFd, POLLIN);
