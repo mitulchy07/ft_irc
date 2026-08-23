@@ -338,13 +338,6 @@ Tested behavior includes:
 - `MODE +l`;
 - channel cleanup after disconnection.
 
-Example local test command:
-
-```bash
-make fclean && make
-./test.py
-```
-
 The local test script is used only for development and is ignored by Git.
 
 ---
@@ -485,8 +478,3 @@ The implementation was manually reviewed, compiled, tested, and adjusted by the 
 The final source code decisions, integration, testing, and validation were performed by the authors.
 
 ---
-
-## Notes
-
-This project is part of the 42 curriculum.  
-It focuses on learning network programming, IRC protocol basics, C++98 design, and multi-client server architecture.
