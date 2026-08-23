@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/20 05:04:29 by mshariar          #+#    #+#             */
-/*   Updated: 2026/08/24 01:19:22 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/24 01:30:55 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,10 @@ static void handleLine(int fd, const std::string &botNick, const std::string &li
 	if (line.compare(0, 4, "PING") == 0)
 	{
     	if (line.size() > 5)
-      	  sendLine(fd, "PONG " + line.substr(5));
-   	 else
-      	  sendLine(fd, "PONG");
-   	 return ;
+        	sendLine(fd, "PONG " + line.substr(5));
+   		else
+        	sendLine(fd, "PONG");
+    	return ;
 	}
 
 	msgPos = line.find(" PRIVMSG ");
