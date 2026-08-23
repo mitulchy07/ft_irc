@@ -104,3 +104,4 @@ Desktop.ini
 
 .env
 .env.*
+.gitignore

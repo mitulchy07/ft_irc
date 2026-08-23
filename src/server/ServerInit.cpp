@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:33 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/07/27 00:12:41 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/23 23:05:42 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,13 @@ int Server::parsePort(const std::string &port) const
 
 void Server::init()
 {
-	if (_serverFd != -1)
-		return ;
-	std::signal(SIGPIPE, SIG_IGN);
-	createListeningSocket();
-	addPollFd(_serverFd, POLLIN);
+    if (_serverFd != -1)
+        return ;
+
+    std::signal(SIGPIPE, SIG_IGN);
+
+    createListeningSocket();
+    addPollFd(_serverFd, POLLIN);
 }
 
 void Server::stop()

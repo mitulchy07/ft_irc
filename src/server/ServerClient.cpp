@@ -6,7 +6,7 @@
 /*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:12:30 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/18 20:07:57 by hchowdhu         ###   ########.fr       */
+/*   Updated: 2026/08/23 22:18:53 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,19 +82,23 @@ bool Server::receiveFromClient(int fd)
 
     if (client == NULL)
         return (false);
+
     bytes = recv(fd, buffer, sizeof(buffer), 0);
+
     if (bytes > 0)
     {
         client->inputBuffer().append(buffer, static_cast<size_t>(bytes));
+
         if (client->inputBuffer().size() > 65536)
             return (false);
+
         return (processClientBuffer(*client));
     }
+
     if (bytes == 0)
         return (false);
-    if (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK)
-        return (true);
-    return (false);
+
+    return (true);
 }
 
 bool Server::flushClientOutput(int fd)
@@ -104,24 +108,28 @@ bool Server::flushClientOutput(int fd)
 
     if (client == NULL)
         return (false);
+
     std::string &output = client->outputBuffer();
+
     if (output.empty())
     {
         setPollEvents(fd, POLLIN);
         return (true);
     }
+
     bytes = send(fd, output.c_str(), output.size(), 0);
+
     if (bytes > 0)
     {
         output.erase(0, static_cast<size_t>(bytes));
+
         if (output.empty())
             setPollEvents(fd, POLLIN);
+
         return (true);
     }
-    if (bytes == -1
-        && (errno == EINTR || errno == EAGAIN || errno == EWOULDBLOCK))
-        return (true);
-    return (false);
+
+    return (true);
 }
 
 void Server::disconnectClient(int fd, const std::string &reason)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Parser.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mshariar <mshariar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hchowdhu <hchowdhu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/07/13 00:11:18 by hchowdhu          #+#    #+#             */
-/*   Updated: 2026/08/15 02:34:58 by mshariar         ###   ########.fr       */
+/*   Updated: 2026/08/23 22:25:19 by hchowdhu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 struct IrcMsg
 {
-    std::string     prefix;
-    std::string     command;
+    std::string prefix;
+    std::string command;
     std::vector<std::string> params;
 };
 
